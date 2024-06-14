@@ -1,4 +1,4 @@
-const movies = [
+export const movies = [
     {  
       vote_count:6573,
       id:211672,
@@ -880,5 +880,4 @@ const movies = [
       vote_average:6.4,
       vote_count:6574
     }
-  ]
-  module.exports = movies;
+  ];

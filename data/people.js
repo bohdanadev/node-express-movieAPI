@@ -1,4 +1,4 @@
-const people = [
+export const people = [
     {  
         popularity:4.192,
         id:2232,
@@ -291,5 +291,4 @@ const people = [
         ],
         adult:false
       }
-    ]
-    module.exports = people;
+    ];

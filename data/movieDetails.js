@@ -1,4 +1,4 @@
-const movieDetails = [
+export const movieDetails = [
     {  
       adult:false,
       backdrop_path:"/vc8bCGjdVp0UbMNLzHnHSLRbBWQ.jpg",
@@ -575,5 +575,4 @@ const movieDetails = [
       vote_average:6.4,
       vote_count:3396
     }
-  ]
-    module.exports = movieDetails;
+  ];

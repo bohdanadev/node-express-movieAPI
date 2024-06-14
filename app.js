@@ -1,23 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const helmet = require('helmet');
-const cors = require('cors');
+import createError from 'http-errors';
+import express from 'express';
+import * as path from 'path';
+import* as cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import helmet from 'helmet';
+import cors from 'cors';
 
-var indexRouter = require('./routes/index');
-const movieRouter = require( './routes/movie');
-const searchRouter = require( './routes/search');
+import { client, seedDatabase } from './db.js';
+import{ indexRouter} from './routes/index.js';
+import { movieRouter } from './routes/movie.js';
+import { searchRouter } from './routes/search.js';
+import { statusCodes } from './constants/status-codes.constants.js';
+import { config } from './configs/config.js';
 
-var app = express();
+const __dirname = path.resolve();
+
+const app = express();
 
 app.use(helmet());
 app.use(cors());
 
 app.use((req, res, next)=>{
-  if(req.query.api_key != 123456789){
-    res.status(401);
+  if(req.query.api_key != config.API_KEY){
+    res.status(statusCodes.UNAUTHORIZED);
     res.json("Invalid API Key");
   }else{
     next();
@@ -30,9 +36,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser.default());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -41,7 +48,7 @@ app.use('/search', searchRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(statusCodes.NOT_FOUND));
 });
 
 // error handler
@@ -51,8 +58,17 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
+  res.status(err.status || statusCodes.INTERNAL_SERVER_ERROR);
   res.render('error');
 });
 
-module.exports = app;
+async function main() {
+  try{
+  await seedDatabase();
+} catch(e) {
+  console.log(error);
+}
+};
+main();
+
+export default app;

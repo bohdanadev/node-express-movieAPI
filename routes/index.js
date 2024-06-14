@@ -1,25 +1,18 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
 
-const movies = require('../data/movies');
+import { getCollection } from '../db.js';
+
+const router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'TMDB' });
 });
 
-router.get('/most_popular', (req, res, next)=>{
-  let page = req.query.page;
-  if(page === undefined) {page=1};
-    let results = movies.filter((movie)=>{
-      return movie.most_popular;
-    });
-    const indexToStart = (page-1)*20;
-    results = results.slice(indexToStart, indexToStart+19);
-    res.json({
-      page,
-      results
-    });
+router.get('/most_popular', async (req, res, next)=>{
+  const movies = await getCollection('moviesList');
+    const results = await movies.find({most_popular: true}).toArray();
+    res.json(results);
 })
 
-module.exports = router;
+export const indexRouter = router;

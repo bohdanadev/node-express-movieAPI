@@ -1,7 +1,9 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
 
-const movieDetails = require('../data/movieDetails');
+import { getCollection } from '../db.js';
+import { statusCodes } from '../constants/status-codes.constants.js';
+
+const router = express.Router();
 
 function requireJSON(req, res, next){
     if(!req.is('application/json')){
@@ -11,36 +13,32 @@ function requireJSON(req, res, next){
     }
   };
 
+  const movieDetails = await getCollection('movieDetails');
+  const movies = await getCollection('moviesList');
+
   router.param(('movieId'),(req, res, next)=>{
     next();
   });
 
-  router.get('/top_rated',(req, res, next)=>{
-    let page = req.query.page;
-    if(!page){page = 1;}
-    const results = movieDetails.sort((a,b)=>{
-      return b.vote_average - a.vote_average
-    });
-    const indexToStart = (page-1)*20;
-    res.json(results.slice(indexToStart,indexToStart+20));
+  router.get('/top_rated', async (req, res, next)=>{
+    const results = await movies.find().sort({ vote_average: -1 }).toArray();
+    res.json(results);
   });
 
-  router.get('/:movieId', (req, res, next)=> {
+  router.get('/:movieId', async (req, res, next)=> {
     const movieId = req.params.movieId;
-    const results = movieDetails.find((movie)=> {
-       return movie.id == movieId
-    });
-    if(!results) {
+    const movie = await movieDetails.findOne({id: +movieId});
+    if(!movie) {
         res.json({
             msg: `Movie with ID ${movieId} is not found`,
             production_companies:[]
         });
     } else {
-    res.json(results);
+    res.json(movie);
     }
     });
 
-    router.post('/:movieId/rating', requireJSON, (req, res, next)=>{
+    router.post('/:movieId/rating', requireJSON, async (req, res, next)=>{
         const movieId = req.params.movieId;
         const userRating = req.body.value;
         if((userRating < .5) || (userRating > 10)){
@@ -48,7 +46,7 @@ function requireJSON(req, res, next){
         }else{
           res.json({
             msg: "Thank you for submitting your rating.",
-            status_code: 200
+            status_code: statusCodes.OK
           })
         }
       });
@@ -58,4 +56,4 @@ function requireJSON(req, res, next){
       });
 
 
-module.exports = router;
+export const movieRouter = router;

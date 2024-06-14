@@ -1,8 +1,10 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
 
-const movies = require('../data/movies');
-const people = require('../data/people');
+import { getCollection } from '../db.js';
+
+
+const router = express.Router();
+
 
 function queryRequired(req, res, next){
     const searchTerm = req.query.query;
@@ -15,23 +17,27 @@ function queryRequired(req, res, next){
 
 router.use(queryRequired);
 
-router.get('/movie',(req, res, next)=>{
+
+router.get('/movie', async (req, res, next)=>{
     const searchTerm = req.query.query;
-    const results = movies.filter((movie)=>{
-      let found = movie.overview.includes(searchTerm) || movie.title.includes(searchTerm);
-      return found;
-    })
+    const collection = await getCollection('moviesList');
+    await collection.createIndex({ overview: 'text', title: 'text' });
+    const results = await collection.find({
+      $text: { $search: searchTerm }
+    }).toArray();
+
     res.json({results})
   });
 
-  router.get('/person',(req, res, next)=>{
+  router.get('/person', async (req, res, next)=>{
     const searchTerm = req.query.query;
-    const results = people.filter((person)=>{
-      let found = person.name.includes(searchTerm);
-      return found;
-    })
+    const collection = await getCollection('people');
+    await collection.createIndex({ name: 'text' });
+    const results = await collection.find({
+      $text: { $search: searchTerm }
+    }).toArray();
     res.json({results})
   });
   
 
-module.exports = router;
+export const searchRouter = router;

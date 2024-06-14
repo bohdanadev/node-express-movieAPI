@@ -43,49 +43,55 @@ Once the server is running, you can access the following API Endpoints adding ap
 
 ## API Endpoints
 
-**Get Most Popular Movies**
-**URL**: /most_popular
-**Method**: GET
-**Description**: Returns a list of the most popular movies.
+# **Get Most Popular Movies**  
+**URL**: /most_popular  
+**Method**: GET  
+**Description**: Returns a list of the most popular movies.  
 
-**Get Top Rated Movies**
-**URL**: movie/top_rated
-**Method**: GET
-**Description**: Returns a list of top-rated movies sorted by their vote average.
 
-**Get Movie Details**
-**URL**: movie/:movieId
-**Method**: GET
-**Description**: Returns the details of a movie by its ID.
-Parameters:
-movieId (required): The ID of the movie.
+# **Get Top Rated Movies**  
+**URL**: movie/top_rated  
+**Method**: GET  
+**Description**: Returns a list of top-rated movies sorted by their vote average.  
 
-**Set Movie Rating**
-**URL**: /movie/:movieId/rating
-**Method**: POST
-**Description**: Sets a rating for a movie.
-Parameters:
-movieId (required): The ID of the movie.
-Body:
-rating (required): The rating to set.
 
-**Delete Movie Rating**
-**URL**: /movie/:movieId/rating
-**Method**: DELETE
-**Description**: Deletes the rating for a movie.
-Parameters:
-movieId (required): The ID of the movie.
+# **Get Movie Details**  
+**URL**: movie/:movieId  
+**Method**: GET  
+**Description**: Returns the details of a movie by its ID.  
+**Parameters:**    
+movieId (required): The ID of the movie.  
 
-**Search Movies by Keywords**
-**URL**: /search/movie
-**Method**: GET
-**Description**: Searches for movies by keywords in the movie's overview or title.
-Query Parameters:
-query (required): The search term.
 
-**Search Movies by Favorite Actors**
-**URL**: /search/person
-**Method**: GET
-**Description**: Searches for movies by favorite actors.
-Query Parameters:
-actor (required): The actor's name.
+# **Set Movie Rating**  
+**URL**: /movie/:movieId/rating  
+**Method**: POST  
+**Description**: Sets a rating for a movie.  
+**Parameters:**  
+movieId (required): The ID of the movie.  
+**Body:**  
+rating (required): The rating to set.  
+
+
+# **Delete Movie Rating**  
+**URL**: /movie/:movieId/rating  
+**Method**: DELETE  
+**Description**: Deletes the rating for a movie.  
+**Parameters:**  
+movieId (required): The ID of the movie.  
+
+
+# **Search Movies by Keywords**  
+**URL**: /search/movie  
+**Method**: GET  
+**Description**: Searches for movies by keywords in the movie's overview or title.  
+**Query Parameters:**  
+query (required): The search term.  
+
+
+# **Search Movies by Favorite Actors**  
+**URL**: /search/person  
+**Method**: GET  
+**Description**: Searches for movies by favorite actors.  
+**Query Parameters:**  
+actor (required): The actor's name.  

@@ -22,18 +22,18 @@ NODE-EXPRESS-MOVIE-API is a RESTful API built with Express and MongoDB. This API
    git clone https://github.com/bohdanadev/node-express-movieAPI.git
    cd node-express-movieAPI
    ```
-   2. Install dependencies:
+2. Install dependencies:
    ```bash
    npm install
    ```
-   3. Set up environment variables 
+3. Set up environment variables 
    ```.env
     PORT=
     MONGO_URL=
     API_KEY=
     ```
 
-   4. Start the server:
+4. Start the server:
    ```bash
    nodemon
    ```
@@ -43,19 +43,19 @@ Once the server is running, you can access the following API Endpoints adding ap
 
 ## API Endpoints
 
-# **Get Most Popular Movies**  
+**Get Most Popular Movies**  
 **URL**: /most_popular  
 **Method**: GET  
 **Description**: Returns a list of the most popular movies.  
 
 
-# **Get Top Rated Movies**  
+**Get Top Rated Movies**  
 **URL**: movie/top_rated  
 **Method**: GET  
 **Description**: Returns a list of top-rated movies sorted by their vote average.  
 
 
-# **Get Movie Details**  
+**Get Movie Details**  
 **URL**: movie/:movieId  
 **Method**: GET  
 **Description**: Returns the details of a movie by its ID.  
@@ -63,7 +63,7 @@ Once the server is running, you can access the following API Endpoints adding ap
 movieId (required): The ID of the movie.  
 
 
-# **Set Movie Rating**  
+**Set Movie Rating**  
 **URL**: /movie/:movieId/rating  
 **Method**: POST  
 **Description**: Sets a rating for a movie.  
@@ -73,7 +73,7 @@ movieId (required): The ID of the movie.
 rating (required): The rating to set.  
 
 
-# **Delete Movie Rating**  
+**Delete Movie Rating**  
 **URL**: /movie/:movieId/rating  
 **Method**: DELETE  
 **Description**: Deletes the rating for a movie.  
@@ -81,7 +81,7 @@ rating (required): The rating to set.
 movieId (required): The ID of the movie.  
 
 
-# **Search Movies by Keywords**  
+**Search Movies by Keywords**  
 **URL**: /search/movie  
 **Method**: GET  
 **Description**: Searches for movies by keywords in the movie's overview or title.  
@@ -89,7 +89,7 @@ movieId (required): The ID of the movie.
 query (required): The search term.  
 
 
-# **Search Movies by Favorite Actors**  
+**Search Movies by Favorite Actors**  
 **URL**: /search/person  
 **Method**: GET  
 **Description**: Searches for movies by favorite actors.  
